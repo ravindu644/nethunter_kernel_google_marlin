@@ -104,8 +104,18 @@ int selinux_enforcing;
 static int __init enforcing_setup(char *str)
 {
 	unsigned long enforcing;
+
+#ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
+	/* Force enforcing, ignore boot parameter */
+	selinux_enforcing = 1;
+#elif defined(CONFIG_SECURITY_SELINUX_ALWAYS_PERMISSIVE)
+	/* Force permissive, ignore boot parameter */
+	selinux_enforcing = 0;
+#else
 	if (!kstrtoul(str, 0, &enforcing))
 		selinux_enforcing = enforcing ? 1 : 0;
+#endif
+
 	return 1;
 }
 __setup("enforcing=", enforcing_setup);
