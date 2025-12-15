@@ -52,7 +52,7 @@ export BUILD_OPTIONS=(
 
 build_kernel(){
     # Make default configuration.
-    make "${BUILD_OPTIONS[@]}" your_defconfig
+    make "${BUILD_OPTIONS[@]}" pixel_marlin_defconfig
 
     # Configure the kernel (GUI)
     make "${BUILD_OPTIONS[@]}" menuconfig
