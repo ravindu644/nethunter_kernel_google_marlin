@@ -84,5 +84,10 @@ build_bootimg(){
     }
 }
 
+pack_lkms(){
+    "${KERNEL_ROOT}/pack_nh_lkms.sh"
+}
+
 build_kernel
 build_bootimg
+pack_lkms

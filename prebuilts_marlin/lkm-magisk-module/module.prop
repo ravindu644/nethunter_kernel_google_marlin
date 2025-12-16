@@ -1,0 +1,6 @@
+id=nethunter_drivers
+name=Nethunter LKMs for Pixel XL (marlin)
+version=1.0
+versionCode=1000
+author=ravindu644
+description=This includes all the Kernel Drivers required for WIFI/BT/NFS Functionalities for external hardware.
