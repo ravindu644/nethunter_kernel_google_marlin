@@ -22,11 +22,12 @@ fi
 
 # Base Variables for LKM tools
 LKM_TOOLS_DIR="${KERNEL_ROOT}/prebuilts_marlin/LKM_Tools"
+MAGISK_MODULE_DIR="${KERNEL_ROOT}/prebuilts_marlin/lkm-magisk-module"
 PKG_NH_MODULES="${LKM_TOOLS_DIR}/04.prepare_only_nethunter_modules.sh"
 NH_MODULES_DIR="${KERNEL_ROOT}/build/nh_lkms"
 STAGING_DIR="${NH_MODULES_DIR}"
 SYSTEM_MAP="${KERNEL_ROOT}/out/System.map"
-OUTPUT_DIR="${KERNEL_ROOT}/prebuilts_marlin/lkm-magisk-module/system/vendor/lib/modules"
+OUTPUT_DIR="${MAGISK_MODULE_DIR}/system/vendor/lib/modules"
 STRIP_TOOL="$(dirname ${BUILD_CC})/llvm-strip"
 
 # Run LKM tools
@@ -43,5 +44,34 @@ STRIP_TOOL="$(dirname ${BUILD_CC})/llvm-strip"
         ""
 } || {
     echo -e "\n[ERROR]: LKM TOOLS FAILED..!"
+    exit 1
+}
+
+# clean up
+rm -rf "${NH_MODULES_DIR}"
+
+# Flatten the directory
+KERNEL_VERSION="$(ls ${OUTPUT_DIR}/vendor_dlkm/lib/modules | grep '4.4' | head -n 1)"
+
+{
+
+mv "${OUTPUT_DIR}/vendor_dlkm/lib/modules/${KERNEL_VERSION}" "${OUTPUT_DIR}/custom" && \
+    rm -rf "${OUTPUT_DIR}/vendor_dlkm" "${OUTPUT_DIR}/missing_modules.txt"
+
+
+} || {
+    echo -e "\n[ERROR]: Flatten Failed..!"
+    exit 1
+}
+
+# Zip the magisk module
+{
+
+cd "${MAGISK_MODULE_DIR}" && \
+    zip -9 -r "${KERNEL_ROOT}/build/Pixel-XL-Nethunter-LKMs_ravindu644.zip" . && \
+    echo -e "\n[INFO] LKM Magisk module Packaging done..!"
+
+} || {
+    echo -e "\n[ERROR]: LKM Magisk module Packaging failed..!"
     exit 1
 }

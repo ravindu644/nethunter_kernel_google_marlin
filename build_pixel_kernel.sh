@@ -91,3 +91,6 @@ pack_lkms(){
 build_kernel
 build_bootimg
 pack_lkms
+
+echo -e "[INFO] Build finished !"
+echo -e "[INFO] Output location: ${KERNEL_ROOT}/build"
