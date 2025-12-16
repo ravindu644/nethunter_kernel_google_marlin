@@ -54,6 +54,9 @@ build_kernel(){
     # Make default configuration.
     make "${BUILD_OPTIONS[@]}" pixel_marlin_defconfig custom.config nethunter.config excludes.config
 
+    # resolve conflicts
+    make "${BUILD_OPTIONS[@]}" olddefconfig
+
     # Configure the kernel (GUI)
     make "${BUILD_OPTIONS[@]}" menuconfig
 
