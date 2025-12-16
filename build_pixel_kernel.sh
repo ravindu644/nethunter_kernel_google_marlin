@@ -61,7 +61,7 @@ build_kernel(){
     make "${BUILD_OPTIONS[@]}" menuconfig
 
     # Build the kernel
-    make "${BUILD_OPTIONS[@]}" Image || exit 1
+    make "${BUILD_OPTIONS[@]}" || exit 1
 
     # Copy the built kernel to the build directory
     cp "${KERNEL_ROOT}/out/arch/arm64/boot/Image" "${KERNEL_ROOT}/build"

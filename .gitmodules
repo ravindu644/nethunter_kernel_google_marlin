@@ -1,3 +1,6 @@
 [submodule "KernelSU-Next"]
 	path = KernelSU-Next
 	url = https://github.com/KernelSU-Next/KernelSU-Next.git
+[submodule "Custom_LKM_Loader"]
+	path = Custom_LKM_Loader
+	url = git@github.com:ravindu644/Custom_LKM_Loader.git
