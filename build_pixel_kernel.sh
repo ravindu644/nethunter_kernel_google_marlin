@@ -68,4 +68,21 @@ build_kernel(){
 
     echo -e "\n[INFO]: BUILD FINISHED..!"
 }
+
+build_bootimg(){
+    {
+        cd "${KERNEL_ROOT}/prebuilts_marlin" && git clean -xfd || true
+        ./magiskboot unpack boot.img && \
+        cp "${KERNEL_ROOT}/build/Image" kernel && \
+        ./magiskboot repack boot.img && \
+        cp new-boot.img "${KERNEL_ROOT}/build/boot.img" && \
+        echo -e "\n[INFO]: BOOTIMAGE BUILD FINISHED..!"
+
+    } || {
+        echo -e "\n[ERROR]: BOOTIMAGE BUILD FAILED..!"
+        exit 1
+    }
+}
+
 build_kernel
+build_bootimg
