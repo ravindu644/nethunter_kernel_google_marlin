@@ -94,7 +94,7 @@ pack_lkms(){
 
 package_stuffs(){
     cd ${KERNEL_ROOT}/build && \
-        zip -9 -r "Pixel-XL-Nethunter-KRNL_lineage-22.2-${BUILD_DATE}.zip" \
+        zip -9 -r "Pixel-XL-Nethunter-Droidspaces-KRNL_lineage-22.2-${BUILD_DATE}.zip" \
             "Kernel" \
             "Magisk Module" && \
         rm -rf "Kernel" "Magisk Module"
