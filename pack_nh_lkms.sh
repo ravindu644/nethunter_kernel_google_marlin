@@ -67,9 +67,16 @@ mv "${OUTPUT_DIR}/vendor_dlkm/lib/modules/${KERNEL_VERSION}" "${OUTPUT_DIR}/cust
 # Zip the magisk module
 {
 
+module_out_dir="${KERNEL_ROOT}/build/Magisk Module"
+
+mkdir -p "${module_out_dir}" || exit 1
+
 cd "${MAGISK_MODULE_DIR}" && \
-    zip -9 -r "${KERNEL_ROOT}/build/Pixel-XL-Nethunter-LKMs_ravindu644.zip" . && \
+    zip -9 -r "${module_out_dir}/Pixel-XL-Nethunter-LKMs_${BUILD_DATE}.zip" . && \
     echo -e "\n[INFO] LKM Magisk module Packaging done..!"
+
+    echo -e "Flash this ZIP file using Magisk/KernelSU" > "${module_out_dir}/README.txt"
+
 
 } || {
     echo -e "\n[ERROR]: LKM Magisk module Packaging failed..!"

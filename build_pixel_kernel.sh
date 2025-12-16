@@ -8,6 +8,7 @@ git submodule init && git submodule update
 export KERNEL_ROOT="$(pwd)"
 export ARCH=arm64
 export KBUILD_BUILD_USER="@ravindu644"
+export BUILD_DATE=$(date +"%Y%m%d%H%M")
 
 mkdir -p "${KERNEL_ROOT}/out" "${KERNEL_ROOT}/build" "${HOME}/toolchains"
 
@@ -72,11 +73,14 @@ build_kernel(){
 build_bootimg(){
     {
         cd "${KERNEL_ROOT}/prebuilts_marlin" && git clean -xfd || true
+        mkdir -p "${KERNEL_ROOT}/build/Kernel" && \
         ./magiskboot unpack boot.img && \
         cp "${KERNEL_ROOT}/build/Image" kernel && \
         ./magiskboot repack boot.img && \
-        cp new-boot.img "${KERNEL_ROOT}/build/boot.img" && \
+        cp new-boot.img "${KERNEL_ROOT}/build/Kernel/boot.img" && \
         echo -e "\n[INFO]: BOOTIMAGE BUILD FINISHED..!"
+
+        echo -e "Flash this boot.img using fastboot.\n\nCommand to use:\n\nfastboot flash boot boot.img\n\nMy GitHub: https://github.com/ravindu644" > "${KERNEL_ROOT}/build/Kernel/README.txt"
 
     } || {
         echo -e "\n[ERROR]: BOOTIMAGE BUILD FAILED..!"
@@ -88,9 +92,19 @@ pack_lkms(){
     "${KERNEL_ROOT}/pack_nh_lkms.sh"
 }
 
+package_stuffs(){
+    cd ${KERNEL_ROOT}/build && \
+        zip -9 -r "Pixel-XL-Nethunter-KRNL_lineage-22.2-${BUILD_DATE}.zip" \
+            "Kernel" \
+            "Magisk Module" && \
+        rm -rf "Kernel" "Magisk Module"
+}
+
 build_kernel
 build_bootimg
 pack_lkms
+package_stuffs
 
+echo ""
 echo -e "[INFO] Build finished !"
 echo -e "[INFO] Output location: ${KERNEL_ROOT}/build"
