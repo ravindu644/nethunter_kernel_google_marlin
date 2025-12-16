@@ -52,7 +52,7 @@ export BUILD_OPTIONS=(
 
 build_kernel(){
     # Make default configuration.
-    make "${BUILD_OPTIONS[@]}" pixel_marlin_defconfig custom.config nethunter.config
+    make "${BUILD_OPTIONS[@]}" pixel_marlin_defconfig custom.config nethunter.config excludes.config
 
     # Configure the kernel (GUI)
     make "${BUILD_OPTIONS[@]}" menuconfig
