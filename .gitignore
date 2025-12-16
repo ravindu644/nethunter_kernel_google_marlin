@@ -124,3 +124,12 @@ android/configs/android-*.cfg
 #Ignoring Android.bp link file
 #
 Android.bp
+
+# Custom
+build/
+out/
+prebuilts_marlin/kernel
+prebuilts_marlin/kernel_dtb
+prebuilts_marlin/lkm-magisk-module/system/vendor/
+prebuilts_marlin/new-boot.img
+prebuilts_marlin/ramdisk.cpio
